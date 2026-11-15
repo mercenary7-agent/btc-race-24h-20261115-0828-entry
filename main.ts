@@ -1,12 +1,14 @@
-// btc-race-24h-20261115-0828 entry: mean-reversion scalper on CBBTC.
+// btc-race-24h-20261115-0828 entry v2: mean-reversion scalper on CBBTC.
 // Buys when the close falls DEV_BPS below the K-bar SMA, sells at +TP_BPS
-// vs the actual fill price or after MAX_HOLD bars. Tuned on the kit dev
-// window with the harness itself: net +25.6 USDC, 4 trades, guardrails met.
+// vs the actual fill price or after MAX_HOLD bars. TP lowered 200->80 bps
+// after walk-forward robustness sweep over 9 x 24h windows (BTC-USD proxy
+// 11-11..11-15 + kit dev window): v2 never loses on any window (worst 0)
+// while v1 lost on 2; mean window PnL 5.2 vs 3.7 USDC.
 import { BPS, runBars } from './vendor/makefun-bars.ts';
 
 const K = 60;
 const DEV_BPS = 150;
-const TP_BPS = 200;
+const TP_BPS = 80;
 const SL_BPS = 10_000;
 const MAX_HOLD = 96;
 const MAX_SLIPPAGE_BPS = 10_000;
